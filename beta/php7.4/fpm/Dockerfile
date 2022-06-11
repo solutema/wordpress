@@ -23,6 +23,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
 		libfreetype6-dev \
+		libicu-dev \
 		libjpeg-dev \
 		libmagickwand-dev \
 		libpng-dev \
@@ -39,6 +40,7 @@ RUN set -ex; \
 		bcmath \
 		exif \
 		gd \
+		intl \
 		mysqli \
 		zip \
 	; \
@@ -101,8 +103,8 @@ RUN { \
 	} > /usr/local/etc/php/conf.d/error-logging.ini
 
 RUN set -eux; \
-	version='5.9-beta4'; \
-	sha1='b5fbe5666c4ff32add4625d7769b501c2de5f588'; \
+	version='6.0'; \
+	sha1='7a5a6d0591771e730b05c49d0c3fc134624d0491'; \
 	\
 	curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$version.tar.gz"; \
 	echo "$sha1 *wordpress.tar.gz" | sha1sum -c -; \

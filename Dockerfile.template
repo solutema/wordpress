@@ -46,6 +46,7 @@ RUN set -ex; \
 	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		freetype-dev \
+		icu-dev \
 		imagemagick-dev \
 		libjpeg-turbo-dev \
 		libpng-dev \
@@ -58,6 +59,7 @@ RUN set -ex; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
 		libfreetype6-dev \
+		libicu-dev \
 		libjpeg-dev \
 		libmagickwand-dev \
 		libpng-dev \
@@ -67,21 +69,15 @@ RUN set -ex; \
 {{ ) end -}}
 	\
 	docker-php-ext-configure gd \
-{{ if env.phpVersion == "7.3" then ( -}}
-		--with-freetype-dir=/usr \
-		--with-jpeg-dir=/usr \
-		--with-png-dir=/usr \
-		--with-webp-dir=/usr \
-{{ ) else ( -}}
 		--with-freetype \
 		--with-jpeg \
 		--with-webp \
-{{ ) end -}}
 	; \
 	docker-php-ext-install -j "$(nproc)" \
 		bcmath \
 		exif \
 		gd \
+		intl \
 		mysqli \
 		zip \
 	; \
